@@ -4,7 +4,7 @@ project(cis565_getting_started)
 
 # IMPORTANT: Set this to the correct path to cl.exe. It should be under the MSVStudio 2017 installation directory 
 # e.g: "D:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x64/cl.exe"
-set(CL_PATH "D:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x64/cl.exe")
+set(CL_PATH "C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x64/cl.exe")
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
@@ -46,7 +46,11 @@ find_library(GLFW_LIBRARY "glfw3" HINTS "${GLFW_LIBRARY_DIR}")
 set(GLEW_INCLUDE_DIR "${EXTERNAL}/include")
 set(GLEW_LIBRARY_DIR "${CMAKE_LIBRARY_PATH}")
 add_definitions(-DGLEW_STATIC)
-find_package(GLEW)
+if(WIN32)
+	find_library(GLEW_LIBRARY "glew32s" HINTS "${GLEW_LIBRARY_DIR}")
+else()
+	find_package(GLEW)
+endif()
 
 find_package(OpenGL)
 
